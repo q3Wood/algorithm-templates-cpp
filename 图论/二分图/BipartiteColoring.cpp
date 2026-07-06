@@ -1,4 +1,5 @@
 // 判读是否为二分图 2026.7.6
+// 【例题】：https://leetcode.cn/problems/maximum-partition-factor/submissions/
 #include <bits/stdc++.h>
 using namespace std;
 int n, m; // n为左侧点数，m为右侧点数
