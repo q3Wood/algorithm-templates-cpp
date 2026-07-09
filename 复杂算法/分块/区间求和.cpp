@@ -1,3 +1,6 @@
+/**
+ * 例题：https://www.luogu.com.cn/record/284560256
+ */
 #include <iostream>
 #include <vector>
 #include <cmath>
