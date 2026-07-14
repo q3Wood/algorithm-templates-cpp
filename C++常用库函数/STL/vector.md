@@ -21,3 +21,8 @@ vec2.assign({}); // vec2 现在为空
 ```cpp
 vector<string> vec(n + 1, string(n + 1, '0')); // 创建一个 n+1 行 n+1 列的二维 vector，并初始化为 '0'
 ```
+
+### 删除
+```cpp
+vec.erase(unique(vec.begin(), vec.end()), vec.end()); // 删除重复元素，前提是 vec 已经排序过
+```
