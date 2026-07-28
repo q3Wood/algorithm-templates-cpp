@@ -16,6 +16,21 @@ vec.resize(n); // 将vector的大小调整为n，如果n为0，则清空vector�
 vector<int> vec2 = {1, 2, 3, 4, 5};
 vec2.resize(3); // vec2 现在包含 {1, 2, 3}
 vec2.assign({}); // vec2 现在为空
+
+
+int MAX = 1e5 + 5;
+vector<int> vec[MAX]; // 创建一个大小为 MAX 的 vector 数组，每个元素都是一个空的 vector<int>
+// 清空
+// 假设当前图的点编号是 1 ~ n（如果是 0 ~ n-1，改成 i = 0; i < n）
+for (int i = 1; i <= n; i++) {
+    adj[i].clear();
+}
+
+// 彻底释放内存
+for (int i = 1; i <= n; i++) {
+    vector<int>().swap(adj[i]); // 用一个空 vector 和当前 vector 交换，瞬间释放内存
+}
+
 ```
 
 ```cpp

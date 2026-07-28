@@ -6,7 +6,7 @@ const int MAXN = 505;
 int n, m; // n为左侧点数，m为右侧点数
 vector<int> adj[MAXN]; // adj[i]表示左侧第i个点能匹配到的右侧点的列表
 int match[MAXN]; // match[i]表示右侧第i个点匹配的左侧点编号，-1表示未匹配
-int vis[MAXN];
+int vis[MAXN]; // vis[i]表示右侧第i个点是否在当前增广路径中被访问过
 int dfn = 0;
 
 bool dfs(int u) {
