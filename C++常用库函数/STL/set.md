@@ -103,3 +103,19 @@ set<int> s1 = {1, 2, 3};
 set<int> s2 = {3, 4, 5};
 s1.merge(s2); // s1 现在包含 {1, 2, 3, 4, 5}，s2 变为空
 ```
+### set的遍历
+```cpp
+set<int> s = {1, 2, 3, 4, 5};
+for (auto it = s.begin(); it != s.end(); ++it) {
+    cout << *it << " ";
+}
+
+// 遍历时删除元素
+for (auto it = s.begin(); it != s.end(); ) {
+    if (*it % 2 == 0) { // 删除偶数
+        it = s.erase(it); // erase 返回下一个元素的迭代器
+    } else {
+        ++it;
+    }
+}
+```
