@@ -71,6 +71,7 @@ public:
         build(a, 1, 0, n - 1); 
     }
 
+    // l, r 是 0-indexed 的区间
     // 接口：区间 [L, R] 加上 v
     void update(int L, int R, long long v) {
         update(L, R, v, 1, 0, n - 1);
