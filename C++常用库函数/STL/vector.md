@@ -41,3 +41,8 @@ vector<string> vec(n + 1, string(n + 1, '0')); // 创建一个 n+1 行 n+1 列�
 ```cpp
 vec.erase(unique(vec.begin(), vec.end()), vec.end()); // 删除重复元素，前提是 vec 已经排序过
 ```
+
+### 合并两个vector
+```cpp
+vec1.insert(vec1.end(), vec2.begin(), vec2.end());
+```
