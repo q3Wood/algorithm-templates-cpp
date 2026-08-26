@@ -2,7 +2,7 @@
 // 【例题】：https://leetcode.cn/problems/maximum-partition-factor/submissions/
 #include <bits/stdc++.h>
 using namespace std;
-int n, m; // n为左侧点数，m为右侧点数
+int n, m; // n为点数，m为边数
 const int MAXN = 505;
 vector<int> adj[MAXN]; // 邻接表表示图
 int color[MAXN]; // color[i]表示第i个点的颜色，0表示未染色，1表示红色，2表示蓝色
@@ -37,4 +37,24 @@ bool check() {
         }
     }
     return true;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    cin >> n >> m;
+    for (int i = 0; i < m; ++i) {
+        int u, v;
+        cin >> u >> v; // u, v从0开始编号，如果题目中是从1开始编号，在addEdge时需要减1
+        addEdge(u, v); 
+    }
+
+    if (check()) {
+        cout << "The graph is bipartite." << endl;
+    } else {
+        cout << "The graph is not bipartite." << endl;
+    }
+
+    return 0;
 }
