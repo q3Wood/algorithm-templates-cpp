@@ -11,7 +11,8 @@
 
 using namespace std;
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-
+uniform_int_distribution<long long> dist(1, 1e9);
+// 生成随机数 int b = dist(rng); // 范围在 [1, 1e9] 之间的随机数
 const int MOD = 998244353;
 const int INF = 0x3f3f3f3f3f3f3f3f;
 const int knight_moves[8][2] = {{2, 1},   {1, 2},   {-1, 2}, {-2, 1},

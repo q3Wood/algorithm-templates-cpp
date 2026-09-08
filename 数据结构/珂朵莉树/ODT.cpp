@@ -15,12 +15,24 @@ struct Node {
 };
 
 set<Node> odt;
-
+int n; // 全局变量，表示区间的右边界, n 可以根据题目要求设置为最大值，通常为题目中允许的最大下标。注意spilt函数中需要检查 pos 是否大于 n，以防止越界。
 // 分裂操作
+// auto split(int pos) {
+//     auto it = odt.lower_bound({pos, 0, 0});
+//     if (it != odt.end() && it->l == pos) return it;
+//     --it;
+//     int l = it->l, r = it->r;
+//     ll v = it->v;
+//     odt.erase(it);
+//     odt.insert({l, pos - 1, v});
+//     return odt.insert({pos, r, v}).first;
+// }
 auto split(int pos) {
-    auto it = odt.lower_bound({pos, 0, 0});
-    if (it != odt.end() && it->l == pos) return it;
-    --it;
+    if (pos > n) return odt.end(); // 核心防线：超出右边界直接返回 end()
+    
+    auto it = --odt.upper_bound({pos, 0, 0}); // 用 upper_bound 找 <= pos 的区间更稳健
+    if (it->l == pos) return it;
+    
     int l = it->l, r = it->r;
     ll v = it->v;
     odt.erase(it);
@@ -53,7 +65,7 @@ void init(int n) {
 }
 
 int main() {
-    int n = 10;
+    n = 10;
     init(n);
     
     // 示例操作
