@@ -13,6 +13,7 @@ using namespace std;
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 const int MOD = 998244353;
+const int mod = 1e9 + 7;
 const int INF = 0x3f3f3f3f3f3f3f3f;
 const int knight_moves[8][2] = {{2, 1},   {1, 2},   {-1, 2}, {-2, 1},
                                 {-2, -1}, {-1, -2}, {1, -2}, {2, -1}};
@@ -28,29 +29,48 @@ struct node {
     }
 };
 void solve() {
-    int n;
-    cin >> n;
-    vector<int> a(2 * n);
-    vector<int> index(n + 1, -1);
-    for (int i = 0; i < 2 *n; i++) {
+    vector<int> l[25];
+    int n, k, x;
+    cin >> n >> k >> x;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
         cin >> a[i];
-        if (index[a[i]] == -1) {
-            index[a[i]] = i;
+    }
+
+    int t1 = n / 2;
+    for (int i = 0; i < (1 << t1); i++) {
+        int xor_sum = 0;
+        int cnt = 0;
+        for (int j = 0; j < t1; j++) {
+            if (i & (1 << j)) {
+                xor_sum ^= a[j];
+                cnt++;
+            }
         }
+        l[cnt].push_back(xor_sum);
     }
-    vector<int> pre(2 * n + 1);
-    for (int i = 0; i < 2 * n; i++) {
-        pre[i + 1] = pre[i] + a[i];
+    for (int i = 0; i <= t1; i++) {
+        sort(all(l[i]));
     }
-    vector<int> f(2 * n + 1);
-    int m = 2 * n;
-    for (int i = 0; i < m; i++) {
-        f[i + 1] = f[i];
-        if (index[a[i]] != i) {
-            f[i + 1] = max(f[i + 1], f[index[a[i]]] + pre[i + 1] - pre[index[a[i]]]);
+    int ans = 0;
+    int t2 = n - t1;
+    for (int i = 0; i < (1 << t2); i++) {
+        int xor_sum = 0;
+        int cnt = 0;
+        for (int j = 0; j < t2; j++) {
+            if (i & (1 << j)) {
+                xor_sum ^= a[t1 + j];
+                cnt++;
+            }
         }
+        int need = k - cnt;
+        if (need < 0 || need > t1) continue;
+        int target = xor_sum ^ x;
+        auto it = lower_bound(all(l[need]), target);
+        auto it2 = upper_bound(all(l[need]), target);
+        ans = (ans + (it2 - it)) % mod;
     }
-    cout << f[m];
+    cout << ans << endl;
 }
 
 signed main() {
