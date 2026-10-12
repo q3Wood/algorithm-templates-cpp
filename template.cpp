@@ -1,7 +1,5 @@
 // template Created by q3Wood on 2026/7/7
 #include <bits/stdc++.h>
-#include <numeric>
-#include <sys/types.h>
 
 #define int long long
 #define all(x) (x).begin(), (x).end()
@@ -20,9 +18,9 @@ const int knight_moves[8][2] = {{2, 1},   {1, 2},   {-1, 2}, {-2, 1},
 const int dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 const int dirs[8][2] = {{0, 1}, {1, 0},  {0, -1}, {-1, 0},
                         {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-struct node {
+struct Node {
     int x, y;
-    bool operator<(const node& other) const {
+    bool operator<(const Node& other) const {
         if (x != other.x)
             return x < other.x;
         return y < other.y;

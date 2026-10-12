@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 using namespace std;
 // 树状数组（Fenwick Tree）
 class FenwickTree {

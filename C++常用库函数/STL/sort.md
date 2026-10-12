@@ -75,3 +75,16 @@ sort(idx.begin(), idx.end(), [&](int i, int j) {
 // 排序后的下标数组 idx 表示 v 中元素的升序排列
 // 结果：idx = {1，4，2，0，3} 对应 v 的值为 {1, 2, 3, 4, 5}
 ```
+
+```cpp
+// 二维数组排序
+vector<vector<int>> arr = {{1, 2}, {3, 1}, {2, 2}};
+// 按照第一列升序排序，第一列相同按第二列降序
+sort(arr.begin(), arr.end(), [](const vector<int>& a, const vector<int>& b) {
+    if (a[0] != b[0]) {
+        return a[0] < b[0]; // 第一列升序
+    }
+    return a[1] > b[1]; // 第一列相同按第二列降序
+});
+
+```

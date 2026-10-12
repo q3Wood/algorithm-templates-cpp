@@ -1,7 +1,5 @@
 // template Created by q3Wood on 2026/7/7
 #include <bits/stdc++.h>
-#include <numeric>
-#include <sys/types.h>
 
 #define int long long
 #define all(x) (x).begin(), (x).end()
@@ -20,64 +18,89 @@ const int knight_moves[8][2] = {{2, 1},   {1, 2},   {-1, 2}, {-2, 1},
 const int dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 const int dirs[8][2] = {{0, 1}, {1, 0},  {0, -1}, {-1, 0},
                         {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-struct node {
+struct Node {
     int x, y;
-    bool operator<(const node& other) const {
+    bool operator<(const Node& other) const {
         if (x != other.x)
             return x < other.x;
         return y < other.y;
     }
 };
-void solve() {
-    vector<int> l[25];
-    int n, k, x;
-    cin >> n >> k >> x;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
 
-    int t1 = n / 2;
-    for (int i = 0; i < (1 << t1); i++) {
-        int xor_sum = 0;
-        int cnt = 0;
-        for (int j = 0; j < t1; j++) {
-            if (i & (1 << j)) {
-                xor_sum ^= a[j];
-                cnt++;
-            }
-        }
-        l[cnt].push_back(xor_sum);
+int n;
+vector<int> c;
+vector<int> w;
+vector<vector<int>> g;
+
+vector<int> d1, d2;
+vector<int> c1;
+vector<int> ans;
+
+void update(int u, int val, int from) {
+    if (val > d1[u]) {
+        d2[u] = d1[u];
+        d1[u] = val;
+        c1[u] = from;
+    } else if (val > d2[u]) {
+        d2[u] = val;
     }
-    for (int i = 0; i <= t1; i++) {
-        sort(all(l[i]));
+}
+
+void dfs1(int u, int fa) {
+    for (int v : g[u]) {
+        if (v == fa) continue;
+        dfs1(v, u);
+        int val = max(0LL, d1[v] + w[v]);
+        update(u, val, v);
     }
-    int ans = 0;
-    int t2 = n - t1;
-    for (int i = 0; i < (1 << t2); i++) {
-        int xor_sum = 0;
-        int cnt = 0;
-        for (int j = 0; j < t2; j++) {
-            if (i & (1 << j)) {
-                xor_sum ^= a[t1 + j];
-                cnt++;
-            }
-        }
-        int need = k - cnt;
-        if (need < 0 || need > t1) continue;
-        int target = xor_sum ^ x;
-        auto it = lower_bound(all(l[need]), target);
-        auto it2 = upper_bound(all(l[need]), target);
-        ans = (ans + (it2 - it)) % mod;
+}
+
+void dfs2(int u, int fa) {
+    for (int v : g[u]) {
+        if (v == fa) continue;
+        int other = (c1[u] == v ? d2[u] : d1[u]);
+        int val = max(0LL, other + w[u]);
+        update(v, val, u);
+        dfs2(v, u);
     }
-    cout << ans << endl;
+}
+void solve() {
+    cin >> n;
+    c.assign(n + 1, 0);
+    w.assign(n + 1, 0);
+    g.assign(n + 1, vector<int>());
+    d1.assign(n + 1, 0);
+    d2.assign(n + 1, 0);
+    c1.assign(n + 1, 0);
+    ans.assign(n + 1, -1);
+    for (int i = 1; i <= n; i++) {
+        cin >> c[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        cin >> w[i];
+    }
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        cin >> u >> v;
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+    dfs1(1, 0);
+    dfs2(1, 0);
+    for (int i = 1; i <= n; i++) {
+        int res = w[i] + d1[i] + d2[i];
+        ans[c[i]] = max(ans[c[i]], res);
+    }
+    for (int i = 1; i <= n; i++) {
+        cout << ans[i] << " ";
+    }
 }
 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
-    // cin >> T;
+    cin >> T;
     while (T--) {
         solve();
     }

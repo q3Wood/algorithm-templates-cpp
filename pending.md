@@ -6,9 +6,14 @@
 
 4. [牛客，期望](https://www.nowcoder.com/practice/e723c5acb14f4e26931135fe033fe65e?channelPut=tracker2)
 
+5. [力扣，影子对Ⅱ](https://leetcode.cn/problems/count-shadow-pairs-ii/description/)
 
+6. [牛客，无关, 排名中递归做法](https://www.nowcoder.com/practice/b612f0f9cf1144aea851279dfa2e824b?channelPut=tracker2)
 
+7. [力扣，圆和矩形重叠](https://leetcode.cn/problems/circle-and-rectangle-overlapping/description/?envType=daily-question&envId=2026-09-19)
 
+8. [周赛补题](https://leetcode.cn/discuss/post/4031722/di-520-chang-li-kou-zhou-sai-by-leetcode-ya32/)
 
+9. [牛客每日](https://www.nowcoder.com/practice/f44bc1d564f747e291f639bce91a06f9?channelPut=tracker2)
 
-
+10. [牛客，矩阵快速幂](https://www.nowcoder.com/practice/da67ea3672e8405e9d8f85f0eb22e30a?channelPut=tracker2)
