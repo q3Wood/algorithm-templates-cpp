@@ -29,9 +29,50 @@ struct Node {
     }
 };
 void solve() {
-    int a, b;
-    cin >> a >> b;
-    cout << a + b << endl;
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> adj(n + 1);
+    for (int i = 0; i < m ; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    } 
+    vector<int> sz(n + 1, 1), dp(n + 1);
+
+    auto dfs1 = [&](auto&& dfs1, int u, int f) -> void {
+        for (int v : adj[u]) {
+            if (v == f) continue;
+            dfs1(dfs1, v, u);
+            sz[u] += sz[v];
+            dp[u] += dp[v] + sz[v];
+        }
+    };
+
+    auto dfs2 = [&](auto&& dfs2, int u, int f) -> void {
+        for (int v : adj[u]) {
+            if (v == f) continue;
+            dp[v] = dp[u] - dp[v] - sz[v] + dp[v] + n - sz[v];
+            dfs2(dfs2, v, u);
+        }
+    };
+    dfs1(dfs1, 1, 0);
+    dfs2(dfs2, 1, 0);
+    vector<int> a;
+    int mi = INF;
+    for (int i = 1; i <= n; i++) {
+        if (dp[i] < mi) {
+            a.clear();
+            a.push_back(i);
+            mi = dp[i];
+        } else if (dp[i] == mi) {
+            a.push_back(i);
+        }
+    }
+    for (int x : a) {
+        cout << x << ' ';
+    }
+
     
     
 }
