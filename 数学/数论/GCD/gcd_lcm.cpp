@@ -11,6 +11,12 @@ long long gcd(long long a, long long b) {
     return a;
 }
 
+/**
+ * 递归实现：求两个数的 GCD
+ * long long gcd(long long a, long long b){
+ *  return b == 0 ? a : gcd(b, a % b);
+ * }
+ */
 // 手写算法：求两个数的 LCM
 // ⚠️ 注意：一定要先除以 GCD 再乘 b，防止 intermediate（中间结果）溢出！
 long long lcm(long long a, long long b) {

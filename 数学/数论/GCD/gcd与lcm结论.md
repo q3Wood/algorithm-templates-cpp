@@ -54,6 +54,8 @@ vector<pair<long long, int>> prime_factorize(long long n) {
 }
 ```
 
+6.  如果 gcd(S, x) = 1，且 S = l * m，那么有 gcd(l, x) = 1 且 gcd(m, x) = 1.
+
 
 
 

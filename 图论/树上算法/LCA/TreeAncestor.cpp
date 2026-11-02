@@ -23,7 +23,7 @@ class TreeAncestor {
 public:
     TreeAncestor(const vector<vector<int>>& adj, int root = 0) {
         int n = adj.size();
-        max_log = bit_width((unsigned)n);
+        max_log = bit_width((unsigned)n) + 1;
         depth.resize(n);
         pa.assign(n, vector<int>(max_log, -1));
 
