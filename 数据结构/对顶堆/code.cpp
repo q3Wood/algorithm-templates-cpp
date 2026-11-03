@@ -15,14 +15,19 @@ private:
     int left_size = 0; 
     int right_size = 0;
 
+    long long left_sum = 0; // 大根堆的元素和
+    long long right_sum = 0; // 小根堆的元素和
+
     // 核心清道夫：只要堆顶是幽灵节点，就立刻弹出去
     void prune() {
         while (!left.empty() && delayed[left.top()] > 0) {
-            delayed[left.top()]--;
+            // delayed[left.top()]--;
+            if (--delayed[left.top()] == 0) delayed.erase(left.top());
             left.pop();
         }
         while (!right.empty() && delayed[right.top()] > 0) {
-            delayed[right.top()]--;
+            // delayed[right.top()]--;
+            if (--delayed[right.top()] == 0) delayed.erase(right.top());
             right.pop();
         }
     }
@@ -30,13 +35,19 @@ private:
     // 维持平衡：严格保证 left_size == right_size 或 left_size == right_size + 1
     void balance() {
         if (left_size > right_size + 1) {
-            right.push(left.top());
+            long long val = left.top();
+            right_sum += val; // 更新小根堆的元素和
+            right.push(val);
+            left_sum -= val; // 更新大根堆的元素和
             left.pop();
             left_size--;
             right_size++;
             prune(); // 发生物理挪动后，新暴露出在堆顶的元素可能是幽灵，立刻查杀
         } else if (left_size < right_size) {
-            left.push(right.top());
+            long long val = right.top();
+            left_sum += val; // 更新大根堆的元素和
+            left.push(val);
+            right_sum -= val; // 更新小根堆的元素和
             right.pop();
             left_size++;
             right_size--;
@@ -48,9 +59,11 @@ public:
     // API 1: 插入元素
     void insert(long long x) {
         if (left.empty() || x <= left.top()) {
+            left_sum += x; // 更新大根堆的元素和
             left.push(x);
             left_size++;
         } else {
+            right_sum += x; // 更新小根堆的元素和
             right.push(x);
             right_size++;
         }
@@ -62,9 +75,11 @@ public:
         delayed[x]++; // 记上死亡笔记，等待未来其冒到堆顶时被 prune 清除
         if (!left.empty() && x <= left.top()) {
             left_size--;
+            left_sum -= x; // 更新大根堆的元素和
             if (x == left.top()) prune(); // 如果它碰巧就在堆顶，顺手清理
         } else {
             right_size--;
+            right_sum -= x; // 更新小根堆的元素和
             if (!right.empty() && x == right.top()) prune();
         }
         balance();
@@ -72,6 +87,7 @@ public:
 
     // API 3: 获取中位数
     double get_median() {
+        if (size() == 0) return 0.0; // 如果没有元素，返回 0 或者抛出异常
         prune(); // 双保险，取值前强制清理一次可能的幽灵
         if ((left_size + right_size) % 2 == 1) {
             return left.top();
@@ -83,5 +99,15 @@ public:
     // API 4: 获取当前有效元素的总个数 (可选)
     int size() {
         return left_size + right_size;
+    }
+
+    // API 5: 获取当前小根堆元素的总和 (可选)
+    long long get_right_sum() const{
+        return right_sum;
+    }
+
+    // API 6: 获取当前大根堆元素的总和 (可选)
+    long long get_left_sum() const {
+        return left_sum;
     }
 };
